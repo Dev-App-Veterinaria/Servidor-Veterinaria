@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  db:
+    image: mongo:latest
+    restart: always
+    command: mongod --port 27020
+    ports:
+      - "27020:27020"
+  app:
+    build: .
+    restart: always
+    working_dir: /home/node/app
+    command: npm run prod
+    environment:
+      - MONGO_URL=mongodb://db:27020/appcultor-servidor
+      - MONGO_PORT=27020
+      - SERVER_PORT=3001
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./package.json:/home/node/app/package.json
+      - ./src:/home/node/app/src
+    links:
+      - db
