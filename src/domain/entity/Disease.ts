@@ -8,4 +8,5 @@ export type Disease = {
     clinicalManifestation: string;
     complications: string;
     distribution: string;
+    states: [string];
 }

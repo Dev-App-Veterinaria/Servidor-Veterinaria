@@ -12,6 +12,7 @@ export interface IDiseaseModel extends Document {
   clinicalManifestation: string;
   complications: string;
   distribution: string;
+  states: [string];
 }
 
 const diseaseSchema = new Schema(
@@ -24,6 +25,7 @@ const diseaseSchema = new Schema(
     clinicalManifestation: { required: true, type: String },
     complications: { required: true, type: String },
     distribution: { required: true, type: String },
+    states: { required: true, type: [String] }
   },
   { versionKey: false, timestamps: { createdAt: 'created_at' } },
 );

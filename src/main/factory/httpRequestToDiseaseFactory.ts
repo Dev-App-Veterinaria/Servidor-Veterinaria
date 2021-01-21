@@ -17,7 +17,8 @@ export class HttpRequestToDiseaseFactory {
             transmission: body.transmission,
             clinicalManifestation: body.clinicalManifestation,
             complications: body.complications,
-            distribution: body.distribution
+            distribution: body.distribution,
+            states: body.states,
         }
         return Disease;
     }
