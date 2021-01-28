@@ -11,6 +11,7 @@ export class HttpRequestToDiseaseFactory {
         const body = this._httpRequest.body;
         const Disease: Disease = {
             name: body.name,
+            scientificName: body.scientificName,
             etiologicalAgent: body.etiologicalAgent,
             vector: body.vector,
             lifeCycle: body.lifeCycle,
