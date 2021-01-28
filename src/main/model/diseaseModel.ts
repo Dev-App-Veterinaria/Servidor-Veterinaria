@@ -5,6 +5,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IDiseaseModel extends Document {
   _id?: string;
   name: string;
+  scientificName: string;
   etiologicalAgent: string;
   vector: [string];
   lifeCycle: string;
@@ -18,6 +19,7 @@ export interface IDiseaseModel extends Document {
 const diseaseSchema = new Schema(
   {
     name: { required: true, type: String },
+    scientificName: { required: true, type: String },
     etiologicalAgent: { required: true, type: String },
     vector: { required: true, type: [String] },
     lifeCycle: { required: true, type: String },
