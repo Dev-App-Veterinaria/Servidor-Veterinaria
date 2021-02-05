@@ -28,8 +28,8 @@ export class DiseaseGateway implements IDiseaseGateway {
     }
 
     getByText(text: string, query: object): Promise<Disease[]> {
-        return this._model.find({ ...query, $text: { $search: text, $language: "pt" } }, { score: { $meta: "textScore" } })
-            .sort({ score: { $meta: "textScore" } })
+        return this._model.find( {$or: [{ name: { $regex: new RegExp(`${text}`) }}, 
+            { scientificName: { $regex: new RegExp(`${text}`) }} ] } )
             .limit(20)
             .then(docs => {
                 const diseases: Disease[] = docs;
