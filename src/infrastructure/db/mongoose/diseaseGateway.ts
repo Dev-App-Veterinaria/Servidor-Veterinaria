@@ -16,6 +16,7 @@ export class DiseaseGateway implements IDiseaseGateway {
         const options = tags ? { tags: { $in: tags.split(",") }, ...rest } : rest;
         return this._model.find(options).then(docs => {
             const diseases: Disease[] = docs;
+            diseases.sort((a, b) => (a.scientificName > b.scientificName)? 1 : ((b.scientificName > a.scientificName) ? -1 : 0));
             return diseases;
         });
     }
