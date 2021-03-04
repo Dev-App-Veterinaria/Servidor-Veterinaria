@@ -33,6 +33,7 @@ export class ArticleGateway implements IArticleGateway {
             .limit(20)
             .then(docs => {
                 const articles: Article[] = docs;
+                articles.sort((a, b) => (a.name > b.name)? 1 : ((b.name > a.name) ? -1 : 0));
                 return articles;
             });
     }
