@@ -19,7 +19,7 @@ export class AddArticleController implements Controller {
 
         const validations: IValidation[] = [
             new RequiredFieldValidation('name'),
-            new RequiredFieldValidation('content'),
+            new RequiredFieldValidation('citation'),
             new RequiredFieldValidation('state'),
             new RequiredFieldValidation('doi'),
             new RequiredFieldValidation('disease'),

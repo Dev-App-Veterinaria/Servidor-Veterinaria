@@ -12,10 +12,11 @@ export class HttpRequestToArticleFactory {
         const body = this._httpRequest.body;
         const Article: Article = {
             name: body.name,
-            content: body.content,
+            citation: body.citation,
             doi: body.doi,
             disease: body.disease,
-            state: body.state
+            state: body.state,
+            url: body.url
         }
         return Article;
     }
