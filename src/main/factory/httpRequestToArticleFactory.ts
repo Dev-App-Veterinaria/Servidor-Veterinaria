@@ -15,8 +15,7 @@ export class HttpRequestToArticleFactory {
             citation: body.citation,
             doi: body.doi,
             disease: body.disease,
-            state: body.state,
-            url: body.url
+            state: body.state
         }
         return Article;
     }

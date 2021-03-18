@@ -5,5 +5,4 @@ export type Article = {
     citation: string;
     disease: string;
     state: [string];
-    url: string;
 }

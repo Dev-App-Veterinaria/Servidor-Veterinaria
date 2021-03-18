@@ -9,7 +9,6 @@ export interface IArticleModel extends Document {
   citation: string;
   disease: string;
   state: [string];
-  url: string;
 }
 
 const articleSchema = new Schema(
@@ -18,8 +17,7 @@ const articleSchema = new Schema(
     doi: { required: true, type: String },
     citation: { required: true, type: String },
     disease: { required: true, type: String },
-    state: { required: true, type: [String] },
-    url: {  type: String }
+    state: { required: true, type: [String] }
   },
   { versionKey: false, timestamps: { createdAt: 'created_at' } },
 );
