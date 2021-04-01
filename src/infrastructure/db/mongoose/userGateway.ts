@@ -6,7 +6,7 @@ import { User } from "@domain/entity";
 export class UserGateway implements IUserGateway {
 
     private _model: Model<IUserModel>;
-
+ 
     constructor() {
         this._model = userModel;
     }
@@ -40,6 +40,21 @@ export class UserGateway implements IUserGateway {
             return user;
         });
 
+    }
+
+    authenticate(user: User): Promise<User> {
+        const email = user.email;
+        return this._model.findOne({email}).select('+password').then(doc => {
+            const searchedUser: User = doc;
+            if(!searchedUser){
+                throw new Error('User not found');
+            }
+            if(user.password !== searchedUser.password){
+                throw new Error('Authentication Erro')
+            }
+
+            return user;
+        });
     }
 
     removeById(id: number): Promise<User> {
