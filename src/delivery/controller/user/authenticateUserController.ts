@@ -5,6 +5,9 @@ import { AuthUser } from "@domain/usercase/user";
 import { User } from "@domain/entity"
 import { HttpRequestToUserFactory } from "@src/main/factory"
 import { badRequest, okay } from "@src/helper/http";
+import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
+import config from "@src/main/config";
 
 
 export class AuthenticateUserController implements Controller {
@@ -26,8 +29,7 @@ export class AuthenticateUserController implements Controller {
         const authUser = new AuthUser(this.userGateway);
 
         return authUser.auth(user).then(result => {
-            const token = "Test token";
-            // const token = jwt.sign({ id: user._id }, "Padrao de teste", { expiresIn: 86400 });
+            const token = jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: 86400 });
             return okay({ user, token });
         }).catch(error => {
             return badRequest(error);
@@ -36,10 +38,3 @@ export class AuthenticateUserController implements Controller {
 
     }
 }
-
-
-    // async hashPassword(user: User){
-    //     const hash = await bcrypt.hash(user.password, 15);
-    //     user.password = hash;
-    //     console.log(`in method: ${user.password}`);
-    // }
