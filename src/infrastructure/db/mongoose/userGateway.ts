@@ -2,6 +2,7 @@ import { IUserGateway } from "@src/data/gateway/userGateway";
 import { userModel, IUserModel } from "@src/main/model";
 import { Model } from "mongoose";
 import { User } from "@domain/entity";
+import * as bcrypt from "bcrypt";
 
 export class UserGateway implements IUserGateway {
 
@@ -44,13 +45,13 @@ export class UserGateway implements IUserGateway {
 
     authenticate(user: User): Promise<User> {
         const email = user.email;
-        return this._model.findOne({email}).select('+password').then(doc => {
+        return this._model.findOne({email}).select('+password').then(async doc => {
             const searchedUser: User = doc;
             if(!searchedUser){
                 throw new Error('User not found');
             }
-            if(user.password !== searchedUser.password){
-                throw new Error('Authentication Erro')
+            if(!await bcrypt.compare(user.password, searchedUser.password)){
+                throw new Error('Authentication Error')
             }
 
             return user;

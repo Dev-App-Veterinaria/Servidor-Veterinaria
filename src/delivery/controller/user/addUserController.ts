@@ -25,12 +25,12 @@ export class AddUserController implements Controller {
 
         const addUser = new AddUser(this.userGateway, new ValidationComposite(validations));
 
+        // esse método irá encriptar a senha e salvar o usuário.
         return addUser.add(user).then(result => {
+            user.password = undefined; // faz com que a senha não seja retornada após o cadastro
             return okay(user);
         }).catch(error => {
             return badRequest(error);
         });
-
-
     }
 }
