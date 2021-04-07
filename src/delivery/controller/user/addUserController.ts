@@ -5,7 +5,6 @@ import { AddUser } from "@domain/usercase/user";
 import { User } from "@domain/entity"
 import { HttpRequestToUserFactory } from "@src/main/factory"
 import { badRequest, okay } from "@src/helper/http";
-import * as bcrypt from "bcrypt";
 
 export class AddUserController implements Controller {
 
@@ -27,8 +26,6 @@ export class AddUserController implements Controller {
         const addUser = new AddUser(this.userGateway, new ValidationComposite(validations));
 
         // esse método irá encriptar a senha e salvar o usuário.
-        let hashedPassword = await bcrypt.hash(user.password, 15);
-        user.password = hashedPassword;
         return addUser.add(user).then(result => {
             user.password = undefined; // faz com que a senha não seja retornada após o cadastro
             return okay(user);
