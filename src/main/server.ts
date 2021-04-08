@@ -1,5 +1,6 @@
 import ExpressApp from 'express';
 import { Router, Express } from 'express';
+import bodyParser from "body-parser";
 
 export class ExpressServer {
 
@@ -9,6 +10,8 @@ export class ExpressServer {
     constructor(port: any) {
         this.app = ExpressApp();
         this.port = port;
+        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     }
 
     start(): void {
