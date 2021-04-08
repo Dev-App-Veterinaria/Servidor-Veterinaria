@@ -1,26 +1,45 @@
 version: "3"
 
+networks:
+  default:
+    external: false
+  web:
+    external: true
+
 services:
   db:
     image: mongo:latest
     restart: always
-    command: mongod --port 27020
+    command: mongod --port 27021
+    networks:
+      - default
     ports:
-      - "27020:27020"
+      - "27021"
   app:
     build: .
     restart: always
     working_dir: /home/node/app
     command: npm run prod
     environment:
-      - MONGO_URL=mongodb://db:27020/appcultor-servidor
-      - MONGO_PORT=27020
-      - SERVER_PORT=3001
-      - PORT=3001
+      - MONGO_URL=mongodb://db:27021/parasitour-servidor
+      - MONGO_PORT=27021
+      - SERVER_PORT=3002
+      - PORT=3002
+    networks:
+      - default
+      - web
     ports:
-      - "3001:3001"
+      - "3002:3002"
     volumes:
       - ./package.json:/home/node/app/package.json
       - ./src:/home/node/app/src
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.parasitour.rule=Host(`parasitour.api.uname.group`)"
+      - "traefik.http.routers.parasitour.entrypoints=web"
+      - "traefik.http.services.parasitour.loadbalancer.server.port=3002"
+      - "traefik.docker.network=web"
     links:
+      - db
+    depends_on:
       - db
