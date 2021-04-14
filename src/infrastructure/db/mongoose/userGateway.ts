@@ -53,6 +53,7 @@ export class UserGateway implements IUserGateway {
             if(!await bcrypt.compare(user.password, searchedUser.password)){
                 throw new Error('Authentication Error')
             }
+            user._id = searchedUser._id;
 
             return user;
         });
